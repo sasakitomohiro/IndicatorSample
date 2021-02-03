@@ -12,6 +12,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding
+        with(binding) {
+            start.setOnClickListener {
+                indicator.setProgressWithAnimation(100f)
+            }
+            reset.setOnClickListener {
+                indicator.setProgressWithAnimation(0f)
+            }
+        }
     }
 }
