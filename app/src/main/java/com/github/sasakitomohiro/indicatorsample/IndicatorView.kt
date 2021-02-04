@@ -16,7 +16,7 @@ class IndicatorView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): AppCompatImageView(
+) : AppCompatImageView(
     context,
     attrs,
     defStyleAttr
@@ -29,7 +29,7 @@ class IndicatorView @JvmOverloads constructor(
     private var animatorProgress: Float = 0f
         @Keep
         set(value) {
-            if(value in 0f..max){
+            if (value in 0f..max) {
                 field = value
                 invalidate()
             }
@@ -54,7 +54,7 @@ class IndicatorView @JvmOverloads constructor(
     /**
      * Setup for paint objects
      * */
-    init{
+    init {
         backgroundPaint.color = ContextCompat.getColor(context, R.color.black)
         backgroundPaint.style = Paint.Style.STROKE
         backgroundPaint.strokeWidth = strokeWidth
@@ -66,7 +66,12 @@ class IndicatorView @JvmOverloads constructor(
     }
 
     fun setProgressWithAnimation(currentProgress: Float) {
-        val objectAnimator = ObjectAnimator.ofFloat(this, "animatorProgress", this.animatorProgress, if(currentProgress>=max) max else currentProgress)
+        val objectAnimator = ObjectAnimator.ofFloat(
+            this,
+            "animatorProgress",
+            this.animatorProgress,
+            if (currentProgress >= max) max else currentProgress
+        )
         objectAnimator.apply {
             duration = 1500
             interpolator = DecelerateInterpolator()
@@ -75,7 +80,7 @@ class IndicatorView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas?) {
-        canvas?.let{
+        canvas?.let {
             it.drawOval(rectF, backgroundPaint)
             val angle: Float = 360 * animatorProgress / max
             it.drawArc(rectF, startAngle.toFloat(), angle, false, foregroundPaint)
@@ -87,6 +92,11 @@ class IndicatorView @JvmOverloads constructor(
         val width = getDefaultSize(suggestedMinimumWidth, widthMeasureSpec)
         val min = min(width, height)
         setMeasuredDimension(min, min)
-        rectF.set(0 + strokeWidth / 2, 0 + strokeWidth / 2, min - strokeWidth / 2, min - strokeWidth / 2)
+        rectF.set(
+            0 + strokeWidth / 2,
+            0 + strokeWidth / 2,
+            min - strokeWidth / 2,
+            min - strokeWidth / 2
+        )
     }
 }
